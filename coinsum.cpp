@@ -8,24 +8,22 @@ int main() {
     int n;
     cin >> n;
 
-    vector<long long> sums;
+    vector<long> v;
 
     for (int i = 0; i < n; i++) {
         int x;
         cin >> x;
-
-        int size = sums.size();
-        for (int i = 0; i < size; i++) sums.push_back(sums[i] + x);
-        sums.push_back(x);
+        v.push_back(x);
     }
 
-    sort(sums.begin(), sums.end());
+    sort(v.begin(), v.end());
 
-    long x = 1;
-    for (auto s : sums) {
-        if (s > x) break;
-        x = s+1;
+    long max = 1;
+
+    for (auto i: v) {
+        if (i <= max) max += i;
+        else break;
     }
 
-    cout << x;
+    cout << max;
 }
