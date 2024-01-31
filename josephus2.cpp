@@ -15,8 +15,9 @@ int main() {
     while (removed < n) {
         pos++;
         pos %= n;
+        int s = k%(n-removed);
         if (kids[pos]) {
-            if (skipped < k) {
+            if (skipped < s) {
                 skipped++;
                 continue;
             }
