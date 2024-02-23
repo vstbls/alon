@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 #include <map>
 
 using namespace std;
@@ -7,28 +8,27 @@ int main () {
     int n,k;
     cin >> n >> k;
 
-    map<int, int> m;
-
-    long counter = 1;
-    int last = -1;
-    for (int i = 0; i < n; i++) {
-        int x;
-        cin >> x;
-        if (last == -1) {
-            last = 0;
-            m[x] = 0;
-            continue;
-        }
-        if (m.size() == k && !m.count(x)) {
-            pair<int,int> lowest = *m.begin();
-            for (auto p : m) {
-                if (p.second < lowest.first) lowest = p;
-            }
-            last = lowest.second+1;
-            m.erase(lowest.first);
-        }
-        m[x] = i;
-        counter += i-last+1;
+    vector<int> x;
+    for (int _ = 0; _ < n; _++) {
+        int i;
+        cin >> i;
+        x.push_back(i);
     }
-    cout << counter;
+
+    long count = 0;
+    map<int, int> m;
+    int sub_a = 0;
+    for (int sub_b = 0; sub_b < x.size(); sub_b++) {
+        int i = x[sub_b];
+        if (!m[i]) m[i] = 0;
+        m[i]++;
+        while (m.size() > k) {
+            int j = x[sub_a];
+            m[j]--;
+            if (!m[j]) m.erase(j);
+            sub_a++;
+        }
+        count += sub_b-sub_a+1;
+    }
+    cout << count;
 }
