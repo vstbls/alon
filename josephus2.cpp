@@ -1,5 +1,5 @@
 #include <iostream>
-#include <vector>
+#include <set>
 
 using namespace std;
 
@@ -7,25 +7,23 @@ int main() {
     int n, k;
     cin >> n >> k;
 
-    vector<int> kids(n,1);
+    set<int> s;
+    
+    for (int i = 1; i <= n; i++) {
+        s.insert(i);
+    }
 
-    int removed = 0;
-    int pos = 0;
-    int skipped = 0;
-    while (removed < n) {
-        pos++;
-        pos %= n;
-        int s = k%(n-removed);
-        if (kids[pos]) {
-            if (skipped < s) {
-                skipped++;
-                continue;
-            }
-            if (pos == 0) cout << n << " ";
-            else cout << pos << " ";
-            kids[pos] = 0;
-            removed++;
-            skipped = 0;
+    auto it = s.begin();
+
+    for (int i = 0; i < n; i++) {
+        for (int _ = 0; _ < k; _++) {
+            it++;
+            if (it == s.end()) it = s.begin();
         }
+        int remove = *it;
+        cout << remove << " ";
+        s.erase(remove);
+        it = s.upper_bound(remove);
+        if (it == s.end()) it = s.begin();
     }
 }
