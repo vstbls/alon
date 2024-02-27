@@ -1,25 +1,26 @@
 #include <iostream>
-#include <set>
+#include <ext/pb_ds/assoc_container.hpp>
 
+using namespace __gnu_pbds;
 using namespace std;
+
+typedef tree<int,null_type,less<int>,rb_tree_tag,tree_order_statistics_node_update> indexed_set;
 
 int main() {
     int n, k;
     cin >> n >> k;
 
-    set<int> s;
+    indexed_set s;
     
     for (int i = 1; i <= n; i++) {
         s.insert(i);
     }
 
-    auto it = s.begin();
+    int pos = 0;
 
     for (int i = 0; i < n; i++) {
-        for (int _ = 0; _ < k%s.size(); _++) {
-            it++;
-            if (it == s.end()) it = s.begin();
-        }
+        pos = (pos+k)%s.size();
+        auto it = s.find_by_order(pos);
         int remove = *it;
         cout << remove << " ";
         s.erase(remove);
