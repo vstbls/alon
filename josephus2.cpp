@@ -16,7 +16,7 @@ int main() {
     auto it = s.begin();
 
     for (int i = 0; i < n; i++) {
-        for (int _ = 0; _ < k; _++) {
+        for (int _ = 0; _ < k%s.size(); _++) {
             it++;
             if (it == s.end()) it = s.begin();
         }
